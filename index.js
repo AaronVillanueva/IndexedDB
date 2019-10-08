@@ -13,6 +13,18 @@ function getDbSchema(){
         }
 
 
-    }
+window.onload = function () {
+    refreshTableData();
+    registerEvents();
+    initDb();
+};
 
+async function initDb() {
+    var isDbCreated = await jsstoreCon.initDb(getDbSchema());
+    if (isDbCreated) {
+        console.log('db created');
+    }
+    else {
+        console.log('db opened');
+    }
 }
