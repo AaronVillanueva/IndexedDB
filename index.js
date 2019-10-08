@@ -5,3 +5,14 @@
  Jaime Orlando López Ramos */
 
 var dbName = 'Videogame Store';
+function getDbSchema(){
+    var tblPRODUCT = {
+        name: 'PRODUCT',
+        columns:{
+            id: {primaryKey: true}
+        }
+
+
+    }
+
+}
