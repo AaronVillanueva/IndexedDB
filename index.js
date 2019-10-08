@@ -5,26 +5,27 @@
  Jaime Orlando López Ramos */
 
 var dbName = 'Videogame Store';
-function getDbSchema(){
+function getDbSchema() {
     var tblPRODUCT = {
         name: 'PRODUCT',
-        columns:{
-            id: {primaryKey: true}
+        columns: {
+            id: {primaryKey: true, autoIncrement: true}
         }
-
-
-window.onload = function () {
-    refreshTableData();
-    registerEvents();
-    initDb();
-};
-
-async function initDb() {
-    var isDbCreated = await jsstoreCon.initDb(getDbSchema());
-    if (isDbCreated) {
-        console.log('db created');
     }
-    else {
-        console.log('db opened');
+
+
+    window.onload = function () {
+        refreshTableData();
+        registerEvents();
+        initDb();
+    };
+
+    async function initDb() {
+        var isDbCreated = await jsstoreCon.initDb(getDbSchema());
+        if (isDbCreated) {
+            console.log('db created');
+        } else {
+            console.log('db opened');
+        }
     }
 }
