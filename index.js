@@ -11,21 +11,51 @@ function getDbSchema() {
         columns: {
             id: {primaryKey: true, autoIncrement: true}
         }
-    }
-
-
-    window.onload = function () {
-        refreshTableData();
-        registerEvents();
-        initDb();
     };
+    var tblVIDEOGAME={
+        name:'VIDEOGAME',
+        columns:{
+            id:{primaryKey: true, autoIncrement: true},
+            year:{dataType: "int"},
+            publisher:{dataType: "string"},
+            genre:{dataType: "string"}
 
-    async function initDb() {
-        var isDbCreated = await jsstoreCon.initDb(getDbSchema());
-        if (isDbCreated) {
-            console.log('db created');
-        } else {
-            console.log('db opened');
+
         }
+    };
+    var db={
+        name: dbName,
+        tables: [tblVIDEOGAME]
+    }
+    return db;
+}
+
+var jsstoreCon = new JsStore.Instance(new Worker("scripts/jsstore.worker.js"));
+
+async function initJsStore() {
+    var database = getDbSchema();
+    const isDbCreated = await connection.initDb(database);
+    if(isDbCreated===true){
+        console.log("db created");
+        // here you can prefill database with some data
+    }
+    else {
+        console.log("db opened");
+    }
+}
+
+
+window.onload = function () {
+    /*refreshTableData();*/
+    registerEvents();
+    initDb();
+};
+
+async function initDb() {
+    var isDbCreated = await jsstoreCon.initDb(getDbSchema());
+    if (isDbCreated) {
+        console.log('db created');
+    } else {
+        console.log('db opened');
     }
 }
