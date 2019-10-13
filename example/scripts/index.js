@@ -24,8 +24,8 @@ function getDbSchema() {
         columns: {
             id: { autoIncrement: true, primaryKey: true },
             name: { dataType: 'string' },
-            country: {},
-            city: {}
+            price: {},
+            category: {}
         }
     }
 
@@ -48,8 +48,8 @@ function registerEvents() {
             id: row.attr('itemid'),
             name: child.eq(0).text(),
             idreq: child.eq(1).text(),
-            country: child.eq(2).text(),
-            city: child.eq(3).text()
+            price: child.eq(2).text(),
+            category: child.eq(3).text()
         }
         refreshFormData(videogame);
         showFormAndHideGrid();
@@ -88,8 +88,8 @@ function refreshTableData() {
             htmlString += "<tr ItemId=" + videogame.id + "><td>" +
                 videogame.name + "</td><td>" +
                 videogame.idreq + "</td><td>" +
-                videogame.country + "</td><td>" +
-                videogame.city + "</td><td>" +
+                videogame.price + "</td><td>" +
+                videogame.category + "</td><td>" +
                 "<a href='#' class='edit'>Edit</a></td>" +
                 "<td><a href='#' class='delete''>Delete</a></td>";
         })
@@ -121,8 +121,8 @@ async function updateVideogame() {
         set: {
             name: videogame.name,
             idreq: videogame.idreq,
-            country: videogame.country,
-            city: videogame.city
+            price: videogame.price,
+            category: videogame.category
         },
         where: {
             id: videogame.id
@@ -151,8 +151,8 @@ function getVideogameFromForm() {
         id: Number($('form').attr('data-student-id')),
         name: $('#txtName').val(),
         idreq: $("input[name='optradio']").val(),
-        country: $('#txtCountry').val(),
-        city: $('#txtCity').val()
+        price: $('#txtCountry').val(),
+        category: $('#txtCity').val()
     };
     return videogame;
 }
@@ -171,6 +171,6 @@ function refreshFormData(videogame) {
     $('form').attr('data-student-id', videogame.id);
     $('#txtName').val(videogame.name);
     $(`input[name='optradio'][value=${videogame.idreq}]`)/*.val(student.idreq);*/.prop('checked', true);
-    $('#txtCountry').val(videogame.country);
-    $('#txtCity').val(videogame.city);
+    $('#txtCountry').val(videogame.price);
+    $('#txtCity').val(videogame.category);
 }
