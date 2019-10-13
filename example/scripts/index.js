@@ -1,4 +1,4 @@
-
+/*Based on the example provided by JsStore https://github.com/ujjwalguptaofficial/JsStore/tree/master/examples/Simple%20Example*/
 
 var jsstoreCon = new JsStore.Instance(new Worker("scripts/jsstore.worker.js"));
 
@@ -11,7 +11,7 @@ window.onload = function () {
 async function initDb() {
     var isDbCreated = await jsstoreCon.initDb(getDbSchema());
     if (isDbCreated) {
-        console.log('db created. welcome to the videogame database');
+        console.log('db created. welcome to the videogame database. based on the one provided as example by JsStore');
     }
     else {
         console.log('db opened. welcome back to the videogame database');
@@ -20,7 +20,7 @@ async function initDb() {
 
 function getDbSchema() {
     var table = {
-        name: 'Student',
+        name: 'Videogame',
         columns: {
             id: { autoIncrement: true, primaryKey: true },
             name: { dataType: 'string' },
@@ -37,33 +37,33 @@ function getDbSchema() {
 }
 
 function registerEvents() {
-    $('#btnAddStudent').click(function () {
+    $('#btnAddVideogame').click(function () {
         showFormAndHideGrid();
         console.log("btnAddStudent has been pressed");
     });
     $('#tblGrid tbody').on('click', '.edit', function () {
         var row = $(this).parents().eq(1);
         var child = row.children();
-        var student = {
+        var videogame = {
             id: row.attr('itemid'),
             name: child.eq(0).text(),
             idreq: child.eq(1).text(),
             country: child.eq(2).text(),
             city: child.eq(3).text()
         }
-        refreshFormData(student);
+        refreshFormData(videogame);
         showFormAndHideGrid();
     });
     $('#tblGrid tbody').on('click', '.delete', function () {
         var result = confirm('Are you sure, you want to delete?');
         if (result) {
-            var studentId = $(this).parents().eq(1).attr('itemid');
-            deleteStudent(Number(studentId));
+            var videogameID = $(this).parents().eq(1).attr('itemid');
+            deleteStudent(Number(videogameID));
         }
     });
     $('#btnSubmit').click(function () {
-        var studentId = $('form').attr('data-student-id');
-        if (studentId) {
+        var videogameID = $('form').attr('data-student-id');
+        if (videogameID) {
             updateStudent();
         }
         else {
@@ -82,14 +82,14 @@ function registerEvents() {
 function refreshTableData() {
     var htmlString = "";
     jsstoreCon.select({
-        from: 'Student'
-    }).then(function (students) {
-        students.forEach(function (student) {
-            htmlString += "<tr ItemId=" + student.id + "><td>" +
-                student.name + "</td><td>" +
-                student.idreq + "</td><td>" +
-                student.country + "</td><td>" +
-                student.city + "</td><td>" +
+        from: 'Videogame'
+    }).then(function (videogames) {
+        videogames.forEach(function (videogame) {
+            htmlString += "<tr ItemId=" + videogame.id + "><td>" +
+                videogame.name + "</td><td>" +
+                videogame.idreq + "</td><td>" +
+                videogame.country + "</td><td>" +
+                videogame.city + "</td><td>" +
                 "<a href='#' class='edit'>Edit</a></td>" +
                 "<td><a href='#' class='delete''>Delete</a></td>";
         })
@@ -103,10 +103,10 @@ function refreshTableData() {
 
 
 async function addStudent() {
-    var student = getStudentFromForm();
+    var videogame = getStudentFromForm();
     var noOfDataInserted = await jsstoreCon.insert({
-        into: 'Student',
-        values: [student]
+        into: 'Videogame',
+        values: [videogame]
     });
     if (noOfDataInserted === 1) {
         refreshTableData();
@@ -115,17 +115,17 @@ async function addStudent() {
 }
 
 async function updateStudent() {
-    var student = getStudentFromForm();
+    var videogame = getStudentFromForm();
     var noOfDataUpdated = await jsstoreCon.update({
-        in: 'Student',
+        in: 'Videogame',
         set: {
-            name: student.name,
-            idreq: student.idreq,
-            country: student.country,
-            city: student.city
+            name: videogame.name,
+            idreq: videogame.idreq,
+            country: videogame.country,
+            city: videogame.city
         },
         where: {
-            id: student.id
+            id: videogame.id
         }
     });
     console.log(`data updated ${noOfDataUpdated}`);
@@ -137,7 +137,7 @@ async function updateStudent() {
 
 async function deleteStudent(id) {
     var noOfStudentRemoved = await jsstoreCon.remove({
-        from: 'Student',
+        from: 'Videogame',
         where: {
             id: id
         }
@@ -147,14 +147,14 @@ async function deleteStudent(id) {
 }
 
 function getStudentFromForm() {
-    var student = {
+    var videogame = {
         id: Number($('form').attr('data-student-id')),
         name: $('#txtName').val(),
         idreq: $("input[name='optradio']").val(),
         country: $('#txtCountry').val(),
         city: $('#txtCity').val()
     };
-    return student;
+    return videogame;
 }
 
 function showFormAndHideGrid() {
@@ -167,10 +167,10 @@ function showGridAndHideForm() {
     $('#tblGrid').show();
 }
 
-function refreshFormData(student) {
-    $('form').attr('data-student-id', student.id);
-    $('#txtName').val(student.name);
-    $(`input[name='optradio'][value=${student.idreq}]`)/*.val(student.idreq);*/.prop('checked', true);
-    $('#txtCountry').val(student.country);
-    $('#txtCity').val(student.city);
+function refreshFormData(videogame) {
+    $('form').attr('data-student-id', videogame.id);
+    $('#txtName').val(videogame.name);
+    $(`input[name='optradio'][value=${videogame.idreq}]`)/*.val(student.idreq);*/.prop('checked', true);
+    $('#txtCountry').val(videogame.country);
+    $('#txtCity').val(videogame.city);
 }
