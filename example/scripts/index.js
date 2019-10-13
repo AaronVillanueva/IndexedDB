@@ -2,12 +2,14 @@
 
 var jsstoreCon = new JsStore.Instance(new Worker("scripts/jsstore.worker.js"));
 
+/* Starting the webpage */
 window.onload = function () {
     refreshTableData();
     registerEvents();
     initDb();
 };
 
+/* initial database creation/load*/
 async function initDb() {
     var isDbCreated = await jsstoreCon.initDb(getDbSchema());
     if (isDbCreated) {
@@ -18,6 +20,7 @@ async function initDb() {
     }
 }
 
+/* start DB tables */
 function getDbSchema() {
     var table = {
         name: 'Videogame',
@@ -36,6 +39,7 @@ function getDbSchema() {
     return db;
 }
 
+/* button actions as well as the setup of the grid */
 function registerEvents() {
     $('#btnAddVideogame').click(function () {
         showFormAndHideGrid();
@@ -101,7 +105,7 @@ function refreshTableData() {
 }
 
 
-
+// DB action
 async function addVideogame() {
     var videogame = getVideogameFromForm();
     var noOfDataInserted = await jsstoreCon.insert({
@@ -114,6 +118,7 @@ async function addVideogame() {
     }
 }
 
+// DB action
 async function updateVideogame() {
     var videogame = getVideogameFromForm();
     var noOfDataUpdated = await jsstoreCon.update({
@@ -135,6 +140,7 @@ async function updateVideogame() {
     refreshFormData({});
 }
 
+// DB action
 async function deleteVideogame(id) {
     var noOfStudentRemoved = await jsstoreCon.remove({
         from: 'Videogame',
@@ -146,6 +152,7 @@ async function deleteVideogame(id) {
     refreshTableData();
 }
 
+// get the data from the Form
 function getVideogameFromForm() {
     var videogame = {
         id: Number($('form').attr('data-student-id')),
