@@ -6,3 +6,8 @@ localhost:8000
 
 
 cd Desktop/indexDB/indexedDB/example
+
+TODO
+archivo de python que lance un localserver preparado
+mejorar la base de datos
+mejor interfaz
