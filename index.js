@@ -30,7 +30,7 @@ function getDbSchema() {
     return db;
 }
 
-var jsstoreCon = new JsStore.Instance(new Worker("scripts/jsstore.worker.js"));
+var jsstoreCon = new JsStore.Instance(new Worker("jsstore.worker.js"));
 
 async function initJsStore() {
     var database = getDbSchema();
@@ -46,9 +46,9 @@ async function initJsStore() {
 
 
 window.onload = function () {
-    /*refreshTableData();*/
-    registerEvents();
-    initDb();
+    /*refreshTableData();
+    registerEvents();*/
+    initJsStore();
 };
 
 async function initDb() {

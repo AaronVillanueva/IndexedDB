@@ -1,0 +1,8 @@
+en la carpeta
+
+python -m http.server
+
+localhost:8000
+
+
+cd Desktop/indexDB/indexedDB/example
