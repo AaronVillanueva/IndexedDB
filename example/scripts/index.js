@@ -39,7 +39,7 @@ function getDbSchema() {
 function registerEvents() {
     $('#btnAddVideogame').click(function () {
         showFormAndHideGrid();
-        console.log("btnAddStudent has been pressed");
+        console.log("btnaddVideogame has been pressed");
     });
     $('#tblGrid tbody').on('click', '.edit', function () {
         var row = $(this).parents().eq(1);
@@ -58,16 +58,16 @@ function registerEvents() {
         var result = confirm('Are you sure, you want to delete?');
         if (result) {
             var videogameID = $(this).parents().eq(1).attr('itemid');
-            deleteStudent(Number(videogameID));
+            deleteVideogame(Number(videogameID));
         }
     });
     $('#btnSubmit').click(function () {
         var videogameID = $('form').attr('data-student-id');
         if (videogameID) {
-            updateStudent();
+            updateVideogame();
         }
         else {
-            addStudent();
+            addVideogame();
         }
     });
     $('#btnCancel').click(function () {
@@ -102,8 +102,8 @@ function refreshTableData() {
 
 
 
-async function addStudent() {
-    var videogame = getStudentFromForm();
+async function addVideogame() {
+    var videogame = getVideogameFromForm();
     var noOfDataInserted = await jsstoreCon.insert({
         into: 'Videogame',
         values: [videogame]
@@ -114,8 +114,8 @@ async function addStudent() {
     }
 }
 
-async function updateStudent() {
-    var videogame = getStudentFromForm();
+async function updateVideogame() {
+    var videogame = getVideogameFromForm();
     var noOfDataUpdated = await jsstoreCon.update({
         in: 'Videogame',
         set: {
@@ -135,7 +135,7 @@ async function updateStudent() {
     refreshFormData({});
 }
 
-async function deleteStudent(id) {
+async function deleteVideogame(id) {
     var noOfStudentRemoved = await jsstoreCon.remove({
         from: 'Videogame',
         where: {
@@ -146,7 +146,7 @@ async function deleteStudent(id) {
     refreshTableData();
 }
 
-function getStudentFromForm() {
+function getVideogameFromForm() {
     var videogame = {
         id: Number($('form').attr('data-student-id')),
         name: $('#txtName').val(),
