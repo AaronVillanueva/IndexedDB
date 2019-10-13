@@ -11,10 +11,10 @@ window.onload = function () {
 async function initDb() {
     var isDbCreated = await jsstoreCon.initDb(getDbSchema());
     if (isDbCreated) {
-        console.log('db created');
+        console.log('db created. welcome to the videogame database');
     }
     else {
-        console.log('db opened');
+        console.log('db opened. welcome back to the videogame database');
     }
 }
 
@@ -39,7 +39,8 @@ function getDbSchema() {
 function registerEvents() {
     $('#btnAddStudent').click(function () {
         showFormAndHideGrid();
-    })
+        console.log("btnAddStudent has been pressed");
+    });
     $('#tblGrid tbody').on('click', '.edit', function () {
         var row = $(this).parents().eq(1);
         var child = row.children();
@@ -68,6 +69,11 @@ function registerEvents() {
         else {
             addStudent();
         }
+    });
+    $('#btnCancel').click(function () {
+        console.log("btnCancel has been pressed");
+        showGridAndHideForm();
+
     });
 }
 
