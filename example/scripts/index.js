@@ -164,7 +164,7 @@ function showGridAndHideForm() {
 function refreshFormData(student) {
     $('form').attr('data-student-id', student.id);
     $('#txtName').val(student.name);
-    $(`input[name='optradio'][value=${student.idreq}]`).val(student.idreq);/*.prop('checked', true);*/
+    $(`input[name='optradio'][value=${student.idreq}]`)/*.val(student.idreq);*/.prop('checked', true);
     $('#txtCountry').val(student.country);
     $('#txtCity').val(student.city);
 }
